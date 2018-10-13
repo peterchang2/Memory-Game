@@ -10,6 +10,7 @@
 
 var cards = ["king","king","queen","queen"];
 var cardsInPlay = [];
+
 var card1 = cards[0];
 cardsInPlay.push(card1);
 console.log(cardsInPlay);
