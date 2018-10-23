@@ -1,4 +1,5 @@
 
+var score = 0;
 var cards = [
     {
         rank: 'queen',
@@ -22,38 +23,44 @@ var cards = [
     }
 ];
 
+var flipCard = function(){
+    var cardId = this.getAttribute('data-id');
+    cardsInPlay.push(cards[cardId].rank);
+    this.setAttribute("src", cards[cardId].cardImage);
+    if(cardsInPlay.length === 2){
+      checkForMatch();
+    }
+};
+
+var checkForMatch = function(){
+     if (cardsInPlay.length === 2){
+        if (cardsInPlay[0] === cardsInPlay[1]){
+          // alertMatch();
+          score +=1;
+          var alertMessage = document.getElementById("alertMessage");
+          alertMessage.innerHTML += 'You found a match!!' + " " + score + "Point";
+        }
+        else if(cardsInPlay[0] !== cardsInPlay[1]){
+          var alertMessage = document.getElementById("alertMessage");
+          alertMessage.innerHTML += 'Sorry try again.';
+        }
+    };
+};
+
+var resetArray = function(){
+  cardsInPlay = [];
+};
+
 var cardsInPlay = [];
 var createBoard = function(){
     for (var i = 0; i < cards.length; i++) {
+        var gameBoard = document.getElementById('game-board');
         var cardElement = document.createElement('img');
         cardElement.setAttribute('src', 'images/back.png');
         cardElement.setAttribute('data-id', i);
         cardElement.addEventListener('click', flipCard);
-        document.getElementById("game-board").appendChild(cardElement);        
+        gameBoard.appendChild(cardElement);
     }
 };
-
-var flipCard = function(){
-    var cardId = this.getAttribute('data-id');       
-    cardsInPlay.push(cards[cardId]);  
-    // console.log(cards[cardID].rank);
-    // console.log(cards[cardID].suit);
-    // console.log(cards[cardID].cardImage);
-    checkForMatch();      
-};
-
-var checkForMatch = function(){
-    cardElement.setAttribute('src', cards[cardId].cardImage);
-     if (cardsInPlay.length === 2){
-        if (cardsInPlay[0] === cardsInPlay[1]){
-            alert("You found a match!");
-        }
-        else if(cardsInPlay[0] !== cardsInPlay[1]){
-            alert("Sorry try again.!");
-        }        
-    };    
-};
-
-
 
 createBoard();
